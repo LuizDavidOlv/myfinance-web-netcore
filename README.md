@@ -1,1 +1,1 @@
-# -myfinance-web-netcore
+# myfinance-web-netcore
