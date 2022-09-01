@@ -20,6 +20,8 @@ namespace MyFinance.App.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.CreditoTemp = "0";
+            ViewBag.DebitoTemp = "0";
             //return RedirectToAction("CreateTransaction");
             List<TransactionViewModel> TransactionPlans = await this.transactionService.GetAllTransactions();
 
@@ -41,15 +43,19 @@ namespace MyFinance.App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> TransactionsReport(TransactionReportViewModel model)
+        public async Task<IActionResult> TransactionsReport(TransactionReportModel model)
         {
+            TransactionReportViewModel transacoes = new TransactionReportViewModel();
             if (model.StartDate != null || model.EndDate != null)
             {
-                await this.transactionService.GetTransactionsByDate(model);
-                // model.Transactions = new Transaction().filterTransactions(model.StartDate, model.EndDate);
+                transacoes = await this.transactionService.GetTransactionsByDate(model);
+                int credito = this.transactionService.CountCredit(transacoes);
+                int debito = this.transactionService.CountDebit(transacoes);
+                ViewBag.CreditoTemp = credito.ToString();
+                ViewBag.DebitoTemp = debito.ToString();
             }
 
-            return View(model);
+            return View(transacoes);
         }
 
         [HttpGet]

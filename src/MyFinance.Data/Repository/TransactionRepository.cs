@@ -56,8 +56,22 @@ namespace MyFinance.Data.Repository
 
         public async Task<TransactionReportModel> GetTransactionsByDate(TransactionReportModel model)
         {
-            return null;
-           //await Db.Transactions.FindAsync
+            try
+            {
+               
+                var filteredTransactions = await Db.Transactions.Where(p => p.Date >= model.StartDate && p.Date <= model.EndDate).ToListAsync();
+                //add filteredTransactions list into model
+                foreach (var transaction in filteredTransactions)
+                {
+                    model.Transacoes.Add(transaction);
+                }
+
+            }
+            catch(Exception ex)
+            {
+                
+            }
+            return model;
         }
     }
 }

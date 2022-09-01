@@ -10,7 +10,9 @@ namespace MyFinance.App.Services
         Task<List<TransactionViewModel>> GetAllTransactions();
         Task<bool> DeleteTransaction(long id);
         Task<bool> UpdateTransaction(TransactionViewModel form);
-        Task<bool> GetTransactionsByDate(TransactionReportViewModel model);
+        Task<TransactionReportViewModel> GetTransactionsByDate(TransactionReportModel model);
+        public int CountDebit(TransactionReportViewModel model);
+        public int CountCredit(TransactionReportViewModel model);
     }
     public class TransactionService : ITransactionService
     {
@@ -89,12 +91,36 @@ namespace MyFinance.App.Services
             }
         }
 
-        public async Task<bool> GetTransactionsByDate(TransactionReportViewModel model)
+        public async Task<TransactionReportViewModel> GetTransactionsByDate(TransactionReportModel model)
         {
-            //montar model
-            await this.transactionRepository.GetTransactionsByDate(null);
+            TransactionReportViewModel finalResponse = new TransactionReportViewModel();
+            try
+            {
+                TransactionReportModel firstResponse = await this.transactionRepository.GetTransactionsByDate(model);
+                
+                finalResponse.StartDate = model.StartDate;
+                finalResponse.EndDate = model.EndDate;
+                foreach(var transaction in firstResponse.Transacoes)
+                {
+                    //add transation in  finalResponse
+                    finalResponse.Transactions.Add(new TransactionViewModel()
+                    {
+                        Id = transaction.Id,
+                        Date = transaction.Date,
+                        Value = transaction.Value,
+                        Type = transaction.Type,
+                        History = transaction.History,
+                        AccountPlanId = transaction.AccountPlanId
+                    });
+                }
 
-            return true;
+
+            }
+            catch (Exception ex)
+            {
+               
+            }
+            return finalResponse;
         }
 
         public async Task<bool> UpdateTransaction(TransactionViewModel form)
@@ -118,6 +144,33 @@ namespace MyFinance.App.Services
             {
                 return false;
             }
+        }
+
+        public int CountDebit(TransactionReportViewModel model)
+        {
+            int response = 0;
+            foreach(var compras in model.Transactions)
+            {
+                if(compras.Type =="2")
+                {
+                    response++;
+                }
+            }
+            return response;
+        }
+
+        public int CountCredit(TransactionReportViewModel model)
+        {
+            int response = 0;
+            foreach (var compras in model.Transactions)
+            {
+                if (compras.Type == "1")
+                {
+                    response++;
+                }
+            }
+            return response;
+
         }
     }
 }

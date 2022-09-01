@@ -5,9 +5,9 @@
 
     string vStartDate = string.Empty;
     string vEndDate = string.Empty;
-
-    var debito = 30;
-    var credito = 70;
+    
+    var debito = ViewBag.DebitoTemp;
+    var credito = ViewBag.CreditoTemp;
 
     if (Model.StartDate != null)
     {
