@@ -12,5 +12,7 @@ namespace MyFinance.Business.Interfaces
         Task<List<TransactionModel>> GetAllAccountPlans();
         Task<bool> CreateTransaction(TransactionModel transaction);
         Task<bool> UpdateTransaction(TransactionModel transaction);
+        Task<TransactionReportModel> GetTransactionsByDate(TransactionReportModel model);
+        Task DeleteTransaction(long id);
     }
 }

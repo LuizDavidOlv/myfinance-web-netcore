@@ -33,23 +33,24 @@ namespace MyFinance.App.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public IActionResult TransactionsReport()
-        //{
-        //    TransactionsReportModel model = new TransactionsReportModel();
-        //    return View(model);
-        //}
+        [HttpGet]
+        public IActionResult TransactionsReport()
+        {
+            TransactionReportViewModel model = new TransactionReportViewModel();
+            return View(model);
+        }
 
-        //[HttpPost]
-        //public IActionResult TransactionsReport(TransactionsReportModel model)
-        //{
-        //    if (model.StartDate != null || model.EndDate != null)
-        //    {
-        //        model.Transactions = new Transaction().filterTransactions(model.StartDate, model.EndDate);
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> TransactionsReport(TransactionReportViewModel model)
+        {
+            if (model.StartDate != null || model.EndDate != null)
+            {
+                await this.transactionService.GetTransactionsByDate(model);
+                // model.Transactions = new Transaction().filterTransactions(model.StartDate, model.EndDate);
+            }
 
-        //    return View(model);
-        //}
+            return View(model);
+        }
 
         [HttpGet]
         public async Task<IActionResult> UpdateTransaction(int id)
@@ -78,18 +79,13 @@ namespace MyFinance.App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTransaction(TransactionViewModel form)
+        public async Task<IActionResult> DeleteTransaction(long id)
         {
-            await this.transactionService.CreateTransaction(form);
+            await this.transactionService.DeleteTransaction(id);
 
             return RedirectToAction("Index");
         }
 
-        //[HttpGet]
-        //public IActionResult DeleteTransaction(int id)
-        //{
-        //    new Transaction().Delete(id);
-        //    return RedirectToAction("Index");
-        //}
+       
     }
 }

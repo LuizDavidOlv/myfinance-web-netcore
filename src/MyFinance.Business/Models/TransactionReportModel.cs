@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace MyFinance.Business.Models
 {
-    public class TransacaoReportModel
+    public class TransactionReportModel
     {
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
         public List<TransactionModel> Transacoes { get; set; }
 
-        public TransacaoReportModel()
+        public TransactionReportModel()
         {
             Transacoes = new List<TransactionModel>();
         }

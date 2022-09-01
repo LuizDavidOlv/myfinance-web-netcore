@@ -6,9 +6,12 @@
     string vStartDate = string.Empty;
     string vEndDate = string.Empty;
 
+    var debito = 30;
+    var credito = 70;
+
     if (Model.StartDate != null)
     {
-        vStartDate = DateTime.Parse(Model.StartDate.ToString()).ToString("yyyy-MM-dd");   
+        vStartDate = DateTime.Parse(Model.StartDate.ToString()).ToString("yyyy-MM-dd");
     }
 
     if (Model.EndDate != null)
@@ -32,6 +35,7 @@
     </div>
 
     <button type="submit" class="btn btn-block btn-success">Filtrar</button>
+    <td><button type="button" class="btn btn-block btn-warning" onclick="loadDraft(@debito, @credito);">Gerar Gráfico</button></td>
 </form>
 
 <hr>
@@ -49,15 +53,55 @@
     @{
         foreach (TransactionViewModel transaction in Model.Transactions)
         {
-             <tr>
-                <td>@transaction.Id</td>
-                <td>@transaction.Date</td>
-                <td>@transaction.Type</td>
-                <td>@transaction.Value</td>
-                <td>@transaction.History</td>
-                
-            </tr>
+                <tr>
+                    <td>@transaction.Id</td>
+                    <td>@transaction.Date</td>
+                    <td>@transaction.Type</td>
+                    <td>@transaction.Value</td>
+                    <td>@transaction.History</td>
+
+                </tr>
         }
     }
-   
+
 </table>
+
+<div style="margin-left: auto; margin-right: auto; width: 300px; height: 100px;">
+
+    <canvas id="myChart" width="400px" height="400px"></canvas>
+
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js"></script>
+<script>
+var chart = null;
+    function loadDraft(d, c) {
+        if (chart != null) {
+            chart.destroy();
+        }
+        const data = {
+            labels: [
+                'Débito',
+                'Credito'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [d, c],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+        const config = {
+            type: 'pie',
+            data: data,
+        };
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, config);
+        chart = myChart;
+    }
+</script>

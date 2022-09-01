@@ -40,5 +40,24 @@ namespace MyFinance.Data.Repository
 
             return true;
         }
+
+        public async Task DeleteTransaction(long id)
+        {
+            try
+            {
+                var transaction = await Db.Transactions.FindAsync(id);
+                Db.Transactions.Remove(transaction);
+                await SaveChanges();
+            }
+            catch
+            {
+            }
+        }
+
+        public async Task<TransactionReportModel> GetTransactionsByDate(TransactionReportModel model)
+        {
+            return null;
+           //await Db.Transactions.FindAsync
+        }
     }
 }

@@ -8,8 +8,9 @@ namespace MyFinance.App.Services
     {
         Task<bool> CreateTransaction(TransactionViewModel transactionViewModel);
         Task<List<TransactionViewModel>> GetAllTransactions();
-        Task<bool> DeleteTransaction(int id);
+        Task<bool> DeleteTransaction(long id);
         Task<bool> UpdateTransaction(TransactionViewModel form);
+        Task<bool> GetTransactionsByDate(TransactionReportViewModel model);
     }
     public class TransactionService : ITransactionService
     {
@@ -43,9 +44,19 @@ namespace MyFinance.App.Services
             }
         }
 
-        public Task<bool> DeleteTransaction(int id)
+        public async Task<bool> DeleteTransaction(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                await this.transactionRepository.DeleteTransaction(id);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<List<TransactionViewModel>> GetAllTransactions()
@@ -76,6 +87,14 @@ namespace MyFinance.App.Services
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async Task<bool> GetTransactionsByDate(TransactionReportViewModel model)
+        {
+            //montar model
+            await this.transactionRepository.GetTransactionsByDate(null);
+
+            return true;
         }
 
         public async Task<bool> UpdateTransaction(TransactionViewModel form)
