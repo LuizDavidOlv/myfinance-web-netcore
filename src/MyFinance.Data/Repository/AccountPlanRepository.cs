@@ -33,8 +33,8 @@ namespace MyFinance.Data.Repository
                 return false;
             }
         }
-
-        public async Task DeleteAccountPlan(int id)
+        
+        public async Task DeleteAccountPlan(long id)
         {
             try
             {
