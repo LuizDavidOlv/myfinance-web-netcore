@@ -78,9 +78,9 @@ namespace MyFinance.App.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTransaction(TransactionViewModel form)
+        public async Task<IActionResult> CreateTransaction(TransactionViewModel form)
         {
-            this.transactionService.CreateTransaction(form);
+            await this.transactionService.CreateTransaction(form);
 
             return RedirectToAction("Index");
         }

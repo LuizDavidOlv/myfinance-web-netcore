@@ -18,20 +18,18 @@ namespace MyFinance.Data.Repository
             return await Db.Transactions.ToListAsync();
         }
 
-        public async Task CreateTransaction(TransactionModel transaction)
+        public async Task<bool> CreateTransaction(TransactionModel transaction)
         {
             try
             {
-                if (transaction == null)
-                {
-                    return;
-                }
-
                 await Db.Transactions.AddAsync(transaction);
-                await SaveChanges();
+                await this.SaveChanges();
+
+                return true;
             }
             catch(Exception ex)
             {
+                return false;
             }
         }
 
