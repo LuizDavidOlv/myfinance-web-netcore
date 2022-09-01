@@ -62,9 +62,9 @@ namespace MyFinance.App.Controllers
 
             return RedirectToAction("Index");
         }
-
+        
         [HttpGet]
-        public async Task<IActionResult> DeleteAccountPlan(int id)
+        public async Task<IActionResult> DeleteAccountPlan(long id)
         {
             await this.accountPlanService.DeleteAccountPlan(id);
             return RedirectToAction("Index");

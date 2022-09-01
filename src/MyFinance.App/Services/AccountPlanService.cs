@@ -8,7 +8,7 @@ namespace MyFinance.App.Services
     {
         Task<bool> CreateAccountPlan(AccountPlanViewModel accountPlanViewModel);
         Task<List<AccountPlanViewModel>> GetAllAccountPlans();
-        Task<bool> DeleteAccountPlan(int id);
+        Task<bool> DeleteAccountPlan(long id);
         Task<bool> UpdateAccountPlan(AccountPlanViewModel id);
     }
 
@@ -90,7 +90,7 @@ namespace MyFinance.App.Services
             }
         }
 
-        public async Task<bool> DeleteAccountPlan(int id)
+        public async Task<bool> DeleteAccountPlan(long id)
         {
             try
             {

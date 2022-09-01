@@ -86,7 +86,7 @@ namespace MyFinance.App.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> DeleteTransaction(long id)
         {
             await this.transactionService.DeleteTransaction(id);
