@@ -54,8 +54,8 @@ namespace MyFinance.App.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateTransaction(int id)
         {
-            List<AccountPlanViewModel> accountPlans = await this.accountPlanService.GetAllAccountPlans();
-            ViewBag.List = accountPlans;
+            List<AccountPlanViewModel> accountPlan = await this.accountPlanService.GetAllAccountPlans();
+            ViewBag.AccountPlans = accountPlan;
             
             return View();
         }
