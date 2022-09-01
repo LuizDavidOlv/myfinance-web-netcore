@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyFinance.App.Services;
 using MyFinance.App.ViewModels;
+using MyFinance.Business.Models;
 
 namespace MyFinance.App.Controllers
 {
@@ -8,23 +9,26 @@ namespace MyFinance.App.Controllers
     {
         private readonly ILogger<TransactionController> _logger;
         private readonly ITransactionService transactionService;
+        private readonly IAccountPlanService accountPlanService;
 
-        public TransactionController(ILogger<TransactionController> logger, ITransactionService transactionService)
+        public TransactionController(ILogger<TransactionController> logger, ITransactionService transactionService, IAccountPlanService accountPlanService)
         {
             _logger = logger;
             this.transactionService = transactionService;
+            this.accountPlanService = accountPlanService;
         }
 
         public async Task<IActionResult> Index()
         {
-            List<TransactionViewModel> accountPlans = await this.transactionService.GetAllTransactions();
+            //return RedirectToAction("CreateTransaction");
+            List<TransactionViewModel> TransactionPlans = await this.transactionService.GetAllTransactions();
 
             //if (accountPlans.Count < 1)
             //{
-            //    return RedirectToAction("CreateAccountPlan");
+            //    return RedirectToAction("CreateTransaction");
             //}
 
-            ViewBag.List = accountPlans;
+            ViewBag.List = TransactionPlans;
 
             return View();
         }
@@ -47,35 +51,39 @@ namespace MyFinance.App.Controllers
         //    return View(model);
         //}
 
-        //[HttpGet]
-        //public IActionResult CreateTransaction(int? id)
-        //{
-        //    if (id != null)
-        //    {
-        //        TransactionModel transaction = new Transaction().GetTransactionById(id);
-        //        ViewBag.Transaction = transaction;
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> UpdateTransaction(int id)
+        {
+            List<AccountPlanViewModel> accountPlans = await this.accountPlanService.GetAllAccountPlans();
+            ViewBag.List = accountPlans;
+            
+            return View();
+        }
 
-        //    ViewBag.AccountPlans = new AccountPlanModel().getAccountPlans();
-        //    return View();
-        //}
+        [HttpPost]
+        public async Task<IActionResult> UpdateTransaction(TransactionViewModel form)
+        {
+            await this.transactionService.UpdateTransaction(form);
 
-        //[HttpPost]
-        //public IActionResult CreateTransaction(TransactionModel form)
-        //{
-        //    Transaction transaction = new Transaction();
+            return RedirectToAction("Index");
+        }
 
-        //    if (form.Id == null)
-        //    {
-        //        transaction.Insert(form);
-        //    }
-        //    else
-        //    {
-        //        transaction.Update(form);
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> CreateTransaction(int? id)
+        {
+            List<AccountPlanViewModel> accountPlans = await this.accountPlanService.GetAllAccountPlans();
+            ViewBag.AccountPlans = accountPlans;
+            
+            return View();
+        }
 
-        //    return RedirectToAction("Index");
-        //}
+        [HttpPost]
+        public IActionResult CreateTransaction(TransactionViewModel form)
+        {
+            this.transactionService.CreateTransaction(form);
+
+            return RedirectToAction("Index");
+        }
 
         //[HttpGet]
         //public IActionResult DeleteTransaction(int id)

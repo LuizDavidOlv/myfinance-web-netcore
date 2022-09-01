@@ -12,6 +12,6 @@ namespace MyFinance.Business.Interfaces
         Task<bool> CreateAccount(AccountPlanModel accountPlan);
         Task<List<AccountPlanModel>> GetAllAccountPlans();
         Task DeleteAccountPlan(int id);
-        Task UpdateAccountPlan(AccountPlanModel accountPlan);
+        Task UpdateAccountPlan(AccountPlanModel form);
     }
 }

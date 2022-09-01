@@ -11,10 +11,10 @@ namespace MyFinance.Business.Models
     [Table("plano_contas")]
     public class AccountPlanModel : Entity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
-        public int Id { get; set; }
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Column("id")]
+        //public int Id { get; set; }
 
         [Column("descricao")]
         public string? Description { get; set; }

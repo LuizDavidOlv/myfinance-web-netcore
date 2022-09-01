@@ -2,18 +2,18 @@
 {
     public class TransactionViewModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
-        public double Value { get; set; }
+        public decimal Value { get; set; }
 
         public string? Type { get; set; }
 
         public string? History { get; set; }
 
-        public int AccountPlanId { get; set; }
-        public string? AccountPlanDescription { get; set; }
+        public long AccountPlanId { get; set; }
+        //public string? AccountPlanDescription { get; set; }
 
     }
 }

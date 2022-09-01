@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,8 +9,11 @@ using System.Threading.Tasks;
 namespace MyFinance.Business.Models
 {
     public abstract class Entity
-    { 
-        public int Id { get; set; }
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("id")]
+        public long Id { get; set; }
 
 
         //protected Entity()

@@ -17,8 +17,8 @@ namespace MyFinance.App.Configuration
             services.AddScoped<IAccountPlanService, AccountPlanService>();
             services.AddScoped<ITransactionService, TransactionService>();
 
-            services.AddScoped<IAccountPlanRepository, AccountPlanRepository>();
-            services.AddScoped<ITransactionRepository, TransactionRepository>();
+            //services.AddScoped<IAccountPlanRepository, AccountPlanRepository>();
+            //services.AddScoped<ITransactionRepository, TransactionRepository>();
         }
     }
 }

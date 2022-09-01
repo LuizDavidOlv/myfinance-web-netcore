@@ -26,8 +26,8 @@ namespace MyFinance.Data.Repository
             DbSet.Add(entity);
             await SaveChanges();
         }
-
-        public virtual async Task<TEntity> GetById(Guid id)
+        
+        public virtual async Task<TEntity> GetById(long id)
         {
             return await DbSet.FindAsync(id);
         }

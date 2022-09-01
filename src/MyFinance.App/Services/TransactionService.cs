@@ -9,7 +9,7 @@ namespace MyFinance.App.Services
         Task<bool> CreateTransaction(TransactionViewModel transactionViewModel);
         Task<List<TransactionViewModel>> GetAllTransactions();
         Task<bool> DeleteTransaction(int id);
-        Task<bool> UpdateTransaction(TransactionViewModel id);
+        Task<bool> UpdateTransaction(TransactionViewModel form);
     }
     public class TransactionService : ITransactionService
     {
@@ -19,9 +19,28 @@ namespace MyFinance.App.Services
         {
             this.transactionRepository = transactionRepository;
         }
-        public Task<bool> CreateTransaction(TransactionViewModel transactionViewModel)
+        public async Task<bool> CreateTransaction(TransactionViewModel transactionViewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                TransactionModel transaction = new TransactionModel();
+
+                transaction.Id = 0;
+                transaction.Value = transactionViewModel.Value;
+                transaction.Date = transactionViewModel.Date;
+                transaction.AccountPlanId = transactionViewModel.AccountPlanId;
+                transaction.Type = transactionViewModel.Type;
+                transaction.History = transactionViewModel.History;
+
+                await this.transactionRepository.CreateTransaction(transaction);
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public Task<bool> DeleteTransaction(int id)
@@ -59,9 +78,27 @@ namespace MyFinance.App.Services
             }
         }
 
-        public Task<bool> UpdateTransaction(TransactionViewModel id)
+        public async Task<bool> UpdateTransaction(TransactionViewModel form)
         {
-            throw new NotImplementedException();
+            try
+            {
+                TransactionModel transaction = new TransactionModel();
+
+                transaction.Id = form.Id;
+                transaction.AccountPlanId = form.AccountPlanId;
+                transaction.Value = form.Value;
+                transaction.History = form.History;
+                transaction.Date = form.Date;
+                transaction.Type = form.Type;
+
+                await this.transactionRepository.UpdateTransaction(transaction);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

@@ -25,11 +25,6 @@ namespace MyFinance.App.Services
         {
             try
             {
-                if (accountPlanViewModel == null)
-                {
-                    throw new ArgumentNullException(nameof(accountPlanViewModel));
-                }
-
                 AccountPlanModel accountPlan = new AccountPlanModel();
                 
                 accountPlan.Id = 0;
@@ -58,7 +53,7 @@ namespace MyFinance.App.Services
                 accountPlan.Type = form.Type;
 
                 await this.accountPlanRepository.UpdateAccountPlan(accountPlan);
-
+                    
                 return true;
             }
             catch (Exception)
@@ -66,7 +61,6 @@ namespace MyFinance.App.Services
 
                 return false;
             }
-            return true;
         }
 
         public async Task<List<AccountPlanViewModel>> GetAllAccountPlans()
@@ -89,9 +83,10 @@ namespace MyFinance.App.Services
 
                 return accountPlans;
             }
-            catch (Exception ex)
+            catch
             {
-                throw new Exception(ex.Message);
+                List<AccountPlanViewModel> accountPlans = new List<AccountPlanViewModel>();
+                return accountPlans;
             }
         }
 
@@ -99,10 +94,6 @@ namespace MyFinance.App.Services
         {
             try
             {
-                if(id == null)
-                {
-                    return false;
-                }
 
                 await this.accountPlanRepository.DeleteAccountPlan(id);
                 

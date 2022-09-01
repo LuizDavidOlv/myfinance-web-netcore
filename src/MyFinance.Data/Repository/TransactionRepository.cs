@@ -17,5 +17,30 @@ namespace MyFinance.Data.Repository
         {
             return await Db.Transactions.ToListAsync();
         }
+
+        public async Task CreateTransaction(TransactionModel transaction)
+        {
+            try
+            {
+                if (transaction == null)
+                {
+                    return;
+                }
+
+                await Db.Transactions.AddAsync(transaction);
+                await SaveChanges();
+            }
+            catch(Exception ex)
+            {
+            }
+        }
+
+        public async Task<bool> UpdateTransaction(TransactionModel transaction)
+        {
+            Db.Transactions.Update(transaction);
+            await SaveChanges();
+
+            return true;
+        }
     }
 }

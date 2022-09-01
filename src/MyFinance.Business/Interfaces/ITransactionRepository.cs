@@ -10,5 +10,7 @@ namespace MyFinance.Business.Interfaces
     public interface ITransactionRepository
     {
         Task<List<TransactionModel>> GetAllAccountPlans();
+        Task CreateTransaction(TransactionModel transaction);
+        Task<bool> UpdateTransaction(TransactionModel transaction);
     }
 }
